@@ -89,6 +89,18 @@ def train():
     return return_message
 
 
+@app.route('/wipe', methods=['GET'])
+def wipe():
+    try:
+        shutil.rmtree('model')
+        os.makedirs(model_directory)
+        return 'Model wiped'
+
+    except Exception as e:
+        print(str(e))
+        return 'Could not remove and recreate the model directory'
+
+
 if __name__ == '__main__':
     try:
         port = int(sys.argv[1])
@@ -106,6 +118,5 @@ if __name__ == '__main__':
         print('Train first')
         print(str(e))
         clf = None
-     
-    app.run(host='0.0.0.0', port=port, debug=True)
 
+    app.run(host='0.0.0.0', port=port, debug=True)
